@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenSeadragon HTML Overlay Demo</title>
+        <script src="https://cdn.jsdelivr.net/npm/openseadragon/build/openseadragon/openseadragon.min.js"></script>
+        <script src="openseadragon-html-overlay.js"></script>
+        <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
+        <style type="text/css">
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+            .openseadragon1 {
+                width: 80%;
+                height: 80%;
+                margin-left: 5%;
+                margin-top: 0;
+            }
+            .card-body {
+                margin: 5%; /* Added */
+                float: none; /* Added */
+                margin-bottom: 25%; /* Added */
+
+            }
+        
+            @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+            body{
+                font-size: 20px;
+                font-family: 'Work Sans', sans-serif;
+                color: #333;
+            font-weight: 300;
+            text-align: center;
+            background-color: #f8f6f0;
+            }
+            h1{
+            font-weight: 300;
+            margin: 0px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: #444;
+            color: #fff;
+            }
+            .question{
+            font-size: 30px;
+            margin-bottom: 0px;
+            }
+         
+            button{
+                font-family: 'Work Sans', sans-serif !important;
+                font-size: 22px important;
+                background-color: #279;
+                color: #fff;
+                border: 0px;
+                border-radius: 3px;
+                padding: 20px;
+                cursor: pointer;
+                
+                
+                }
+            #next {
+                position: fixed; /* Fixed/sticky position */
+                bottom: 20px; /* Place the button at the bottom of the page */
+                right: 30px; /* Place the button 30px from the right */
+                z-index: 99; 
+                margin-bottom: 20px;
+                float: right;
+            }
+
+            #download {
+                position: fixed; /* Fixed/sticky position */
+                bottom: 20px; /* Place the button at the bottom of the page */
+                right: 130px; /* Place the button 30px from the right */
+                z-index: 99; 
+                margin-bottom: 20px;
+                float: right;
+            }
+
+            #break {
+                position: fixed; /* Fixed/sticky position */
+                top: 60px; /* Place the button at the bottom of the page */
+                right: 30px; /* Place the button 30px from the right */
+                z-index: 99; 
+                margin-bottom: 20px;
+                float: right;
+            }
+                button:hover{
+                    background-color: #38a;
+                }
+
+                .slide{
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 0.5s;
+                }
+                .active-slide{
+                opacity: 1;
+                z-index: 2;
+                }
+                .quiz-container{
+                position: relative;
+                height: 100px;
+                margin-top: 40px;
+                }
+
+                .form-group {
+                    font-family: 'Work Sans', sans-serif;
+                    position: fixed; /* Fixed/sticky position */
+                    top: 520px; /* Place the button at the bottom of the page */
+                    right: 30px; /* Place the button 30px from the right */
+                    z-index: 99; 
+                    font-size: 22px;
+                }
+
+                .form-group3 {
+                    font-family: 'Work Sans', sans-serif;
+                    position: fixed; /* Fixed/sticky position */
+                    top: 550px; /* Place the button at the bottom of the page */
+                    right: 630px; /* Place the button 30px from the right */
+                    z-index: 99; 
+                    font-size: 22px;
+                }
+
+                .form-row {
+                    position: fixed !import;
+                    margin: auto;
+                }
+
+                .form-group2 {
+                    width: 100%;
+                    margin-bottom: 10%;
+                }
+
+                #submit {
+                    font-family: 'Work Sans', sans-serif !important;
+                    font-size: 22px important;
+                    position: fixed;
+                    left: 45%;
+                    top:40%;
+                }
+
+                .modal-dialog {
+                        width: 80%;
+                        height:90% !important;
+                }
+                
+                .modal-content {
+                    height: 100%;
+                    width: 100%;
+                }
+               
+        </style>
+    </head>
+    <body>
+        <h1>FewShot Study Patch Selection</h1>
+
+        <button id="next" class="btn btn-success btn-lg">Next</button>
+        <button id="download" class="btn btn-success btn-lg">Download Selections till now</button>
+        <button id="break" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Mola</button>
+        <div class="quiz-container">
+            <div id="quiz">
+                <div class="slide">
+                    <h2 class="card-title">Welcome!</h2>
+                    <div class="question"> Before start, please fill your email address:</div>
+                    <div class="form-group2">
+                    <br><br><br>
+                        <div class="form-row">
+                            <div class="col-md-3"></div>
+                                    
+                            <div class="col-md-6">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                    </div>
+                    <p ><h4>Please select a folder to continue:</h4></p>
+                        <div class="form-group3">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="path" value="ependymoma_anaplastic">ependymoma_anaplastic</label></li>
+                            <li><label><input type="radio" name="path" value="ependymoma_myxopapillary">ependymoma_myxopapillary</label></li>
+                            <li><label><input type="radio" name="path" value="ependymoma_nosubtype">ependymoma_nosubtype</label></li>
+                            <li><label><input type="radio" name="path" value="ependymoma_subependymoma">ependymoma_subependymoma</label></li>
+                            <li><label><input type="radio" name="path" value="medul_anaplastic">medul_anaplastic</label></li>
+                            <li><label><input type="radio" name="path" value="medul_desmoplastic">medul_desmoplastic</label></li>
+                            <li><label><input type="radio" name="path" value="medul_nosubtype">medul_nosubtype</label></li>
+                            <li><label><input type="radio" name="path" value="pylocytic_astrocytoma">pylocytic_astrocytoma</label></li>
+                            <li><label><input type="radio" name="path" value="ewing_sarcoma">ewing_sarcoma</label></li>
+                        </ul>
+    
+                    </div>
+
+                   
+                </div>
+                <div class="slide">
+                    <div id="numbers1"> Selected Good Quality patches for Class Ewing Sarcoma: 0</div>
+                    <div class="form-group">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="disease1" value="good">Good Quality</label></li>
+                            <li><label><input type="radio" name="disease1" value="bad">Bad Quality</label></li>
+                            <li><label><input type="radio" name="disease1" value="suspicious">Suspicious</label></li>
+                        </ul>
+                        <label for="comment">Comment:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment1"></textarea>
+                    </div>
+                </div>
+
+                <div class="slide">
+                    <div id="numbers2"> Selected Good Quality patches for Class Ewing Sarcoma: 0</div>
+                    <div class="form-group">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="disease2" value="good">Good Quality</label></li>
+                            <li><label><input type="radio" name="disease2" value="bad">Bad Quality</label></li>
+                            <li><label><input type="radio" name="disease2" value="suspicious">Suspicious</label></li>
+                        </ul>
+                        <label for="comment">Comment:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment2"></textarea>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div id="numbers3"> Selected Good Quality patches for Class Ewing Sarcoma: 0</div>
+                    <div class="form-group">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="disease3" value="good">Good Quality</label></li>
+                            <li><label><input type="radio" name="disease3" value="bad">Bad Quality</label></li>
+                            <li><label><input type="radio" name="disease3" value="suspicious">Suspicious</label></li>
+                        </ul>
+                        <label for="comment">Comment:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment3"></textarea>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div id="numbers4"> Selected Good Quality patches for Class Ewing Sarcoma: 0</div>
+                    <div class="form-group">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="disease4" value="good">Good Quality</label></li>
+                            <li><label><input type="radio" name="disease4" value="bad">Bad Quality</label></li>
+                            <li><label><input type="radio" name="disease4" value="suspicious">Suspicious</label></li>
+                        </ul>
+                        <label for="comment">Comment:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment4"></textarea>
+                    </div>
+                </div>
+
+            </div>
+        </div>        
+        <div id="contentDiv1" class="openseadragon1" style= "display:none; position: relative;"></div>
+        <div id="contentDiv2" class="openseadragon1" style= "display:none; position: relative;"></div>
+        <div id="contentDiv3" class="openseadragon1" style= "display:none; position: relative;"></div>
+        <div id="contentDiv4" class="openseadragon1" style= "display:none; position: relative;"></div>
+
+
+
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">!Mola!</h4>
+                </div>
+                <div class="modal-body">
+                <p>Devam etmek için lütfen "Devam" butonuna basın.</p>
+                </div>
+                <div class="modal-footer">
+                <button id="continue" class="btn btn-default" data-dismiss="modal">Devam</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        
+        <script>
+
+        (function(){
+            function showSlide(n) {
+                
+                slides[currentSlide].classList.remove('active-slide');
+                slides[n].classList.add('active-slide');
+                currentSlide = n;
+
+                function saveTextAsFile(){
+
+                var textFileAsBlob = new Blob([comments], {type:'text/plain'});
+                var fileNameToSaveAs = $.trim(document.getElementById('exampleInputEmail1').value)+".txt";
+            
+                var downloadLink = document.createElement("a");
+                downloadLink.download = fileNameToSaveAs;
+                downloadLink.innerHTML = "Download File";
+                if (window.webkitURL != null)
+                {
+
+                    downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+                }
+                else
+                {
+
+                    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                    downloadLink.onclick = destroyClickedElement;
+                    downloadLink.style.display = "none";
+                    document.body.appendChild(downloadLink);
+                }
+            
+                downloadLink.click();
+            }
+
+                if(currentSlide === slides.length-1){
+                    nextButton.style.display = 'none';
+                    //nextButton.innerHTML="Finish"
+                    downloadButton.style.display = 'inline-block';
+                    downloadButton.innerHTML="Download and Finish"
+                    breakButton.style.display = 'none';
+                    document.getElementsByClassName("form-group2")[0].style.display='none';
+
+                    let current_comment="comment"+currentSlide
+                    let input1 = document.getElementById(current_comment);
+                    let button = document.getElementById("download");
+                    button.disabled = true;
+                    input1.addEventListener("input", stateHandle);
+                    _name="disease"+currentSlide
+                    var requiredRadios = $(`input[name=${_name}]`);
+                    //requiredRadios.addEventListener("change", stateHandle);
+                    for (item=0; item<requiredRadios.length; item++) { 
+                        requiredRadios[item].addEventListener("change", stateHandle); 
+                    }
+                    
+                    function stateHandle() {
+                        var nbr_checked_radios = document.querySelectorAll(`input[name=${_name}]:checked`).length;
+                        if ( nbr_checked_radios === 0  ) {
+                            button.disabled = true;
+                        } else {
+                            button.disabled = false;
+                        }
+                    }
+
+                    var button_sbmt = document.getElementById('download');
+                    button_sbmt.addEventListener('click', saveTextAsFile);
+                    id="numbers"+(currentSlide)
+                    document.getElementById(id).innerHTML="Selected Good Quality patches for Class "+dataset_selected+": "+ good
+                }
+                else if(currentSlide === 0){
+                    nextButton.style.display = 'inline-block';
+                    downloadButton.style.display = 'none';
+                    nextButton.innerHTML="Start"
+                    breakButton.style.display = 'none';
+                    document.getElementsByClassName("form-group2")[0].style.display='inline-block';
+
+                    //validate 
+                    let input1 = document.getElementById("exampleInputEmail1");
+                    _name="path"
+                    var requiredRadios = $(`input[name=${_name}]`);
+                    for (item=0; item<requiredRadios.length; item++) { 
+                        requiredRadios[item].addEventListener("change", stateHandle); 
+                    }
+                    nextButton.disabled = true;
+                    input1.addEventListener("input", stateHandle);
+                   
+                    function stateHandle() {
+                        var pattern=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                        result2=pattern.test(document.getElementById("exampleInputEmail1").value)
+                        var nbr_checked_radios = document.querySelectorAll(`input[name=${_name}]:checked`).length;
+                    
+                        //result3=pattern.test(document.getElementById("last_name").value)
+                        //if ($.trim(input1.value).length === 0 || $.trim(input2.value).length === 0 || document.getElementById("first_name").value === "" || document.getElementById("last_name").value ==="" ) {
+                        if(result2===false ||  nbr_checked_radios === 0) {    
+                            nextButton.disabled = true;
+                        } else {
+                            dataset_selected=document.querySelectorAll(`input[name=${_name}]:checked`)[0].value
+                            nextButton.disabled = false;
+                        }
+                    }
+
+                }
+                else{
+                    nextButton.style.display = 'inline-block';
+                    downloadButton.style.display = 'inline-block';
+                    downloadButton.innerHTML="Download"
+                    nextButton.innerHTML="Next"
+                    breakButton.style.display = 'inline-block';
+                    document.getElementsByClassName("form-group2")[0].style.display='none';
+                    id="numbers"+(currentSlide)
+                    document.getElementById(id).innerHTML="Selected Good Quality patches for Class "+dataset_selected+": "+ good
+                    let current_comment="comment"+currentSlide
+                    let input1 = document.getElementById(current_comment);
+                    let button = document.getElementById("next");
+                    let button2 = document.getElementById("download");
+                    button.disabled = true;
+                    button2.disabled = true;
+                    input1.addEventListener("input", stateHandle);
+                    _name="disease"+currentSlide
+                    var requiredRadios = $(`input[name=${_name}]`);
+                    //requiredRadios.addEventListener("change", stateHandle);
+                    for (item=0; item<requiredRadios.length; item++) { 
+                        requiredRadios[item].addEventListener("change", stateHandle); 
+                    }
+                    
+                    function stateHandle() {
+                        var nbr_checked_radios = document.querySelectorAll(`input[name=${_name}]:checked`).length;
+                        if ( nbr_checked_radios === 0  ) {
+                            button.disabled = true;
+                            button2.disabled = true;
+                        } else {
+                            button.disabled = false;
+                            button2.disabled = false;
+                        }
+                    }
+
+                    var button_sbmt = document.getElementById('download');
+                    button_sbmt.addEventListener('click', saveTextAsFile);
+                    
+
+                }
+
+                console.log(currentSlide)
+
+                var number_of_slides_list=Array.from(Array(5).keys())
+                number_of_slides_list.splice(0,1)
+                console.log(number_of_slides_list)
+                var itemsWithoutCurrent = number_of_slides_list.filter(function(x) { return x !== currentSlide && x !==0; });
+                console.log(itemsWithoutCurrent)
+                for(item in itemsWithoutCurrent){
+                    console.log("item:",itemsWithoutCurrent[item][item])
+                    id_name="contentDiv"+itemsWithoutCurrent[item]
+                    console.log(id_name)
+                    document.getElementById(id_name).style.display="none";
+                }
+                if(currentSlide !== 0) {
+                    current_id="contentDiv"+currentSlide
+                    document.getElementById(current_id).style.display="block";
+
+                var widths=["1024","1024","1024","1024","1024"]//["5975","99878","7000","11000","4979","23904","13429","18000","7000","16932","21896","11511","9000","23904","89890","6000","12471","20944","111383","23970","37848","16786","10000","15349","33864","99600","25704","5975","43316","20145","16000","27818","9000","19186","91632","13429","50456","33864","40836","94247","20145","49980","43316","21896","10000","23904","111383","10000","35856","9000","57120","94247","99878","16932","9000","40836","49980","12471","4979","20944","37848","57120","35856","27818","16000","50456","11511","99600","10000","91632","23970","6000","19186","16786","23904","25704","11000","18000","89890","15349"]
+                var heights=["1024","1024","1024","1024","1024"]//["8759","44231","5613","9218","5691","41058","17178","13914","5613","15179","10947","13301","9387","41058","42769","6242","17718","19135","24233","21636","43907","15682","8827","18668","31905","29206","20058","8759","15348","19062","17621","26244","7099","18959","33690","17178","12926","31905","14825","25013","19062","14161","15348","10947","12583","28414","24233","8827","26826","9387","18243","25013","44231","15179","7099","14825","14161","17718","5691","19135","43907","18243","26826","26244","17621","12926","13301","29206","12583","33690","21636","6242","18959","15682","28414","20058","9218","13914","42769","18668"]
+                var file_name="http://192.168.0.26:8000/"+file_dirs[currentSlide]
+                var _width=widths[currentSlide]
+                var _height=heights[currentSlide]
+
+                var tileSource = {
+                    Image: {
+                        xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+                        Url: file_name,
+                        Format: "png",
+                        Overlap: "2",
+                        TileSize: "128",
+                        Size: {
+                            Width:  _width,
+                            Height: _height
+                        }
+                    }
+                };
+
+                var viewer = OpenSeadragon({
+                    id: current_id,
+                    prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon/build/openseadragon/images/",
+                    tileSources: [{
+                        type: 'image',
+                        url: file_name,
+                        
+                    }], 
+                    showNavigator:  true,
+                    maxZoomLevel: 	4,
+                    visibilityRatio: 	1,
+                });
+
+                }
+            
+            }
+
+
+
+            var file_dirs=["EGE_BRAIN_TRAY_2-001.h5_666.png","EGE_SYNTHETIC_SCAN_2_TRAY_1-008.h5_1117.png","EGE_SYNTHETIC_SCAN_2_TRAY_1-008.h5_1295.png","EGE_SYNTHETIC_SCAN_2_TRAY_1-008.h5_1307.png","EGE_SYNTHETIC_SCAN_2_TRAY_1-008.h5_1314.png"]//["lung/lusc/1/TCGA-56-8305-01A-01-TS1.5c44f18e-dfa6-47e1-89bd-9f24bb0ada2c.png","brain/gbm/1/TCGA-06-0145-01A-01-BS1.7c10d545-604b-43b0-8759-c0dd0eae2a08.png","lung/lusc/2/fake_stitch.png","lung/luad/1/TCGA-38-4631-11A-01-BS1.8777cd1a-1d4d-4d5e-b036-5fd2cb9406f8.png","lung/lusc/7/fake_stitch.png","brain/lgg/1/TCGA-FG-5962-01B-01-BS1.5741fd21-5def-40dc-8fe8-2bdd2f19b744.png","lung/lusc/4/TCGA-52-7810-01A-01-TS1.42a4fb5e-ca1f-4441-bea7-65bfd2eb2f19.png","brain/gbm/2/fake_stitch.png","lung/lusc/2/TCGA-43-5668-11A-01-TS1.6d8ac185-f903-4df2-b378-1c1f4829796f.png","lung/luad/2/TCGA-55-7995-01A-01-BS1.8a52053b-1c6b-428d-936f-197ca2753290.png","lung/luad/3/fake_stitch.png","brain/gbm/3/fake_stitch.png","lung/lusc/8/fake_stitch.png","brain/lgg/1/fake_stitch.png","brain/gbm/4/fake_stitch.png","lung/luad/4/TCGA-05-4397-01A-01-TS1.e4fe3921-3510-4404-90a7-09e4eb93ab3e.png","brain/gbm/5/TCGA-08-0347-01A-01-BS1.561f789b-5bb6-4206-b1cc-ce2f418f1ddc.png","lung/luad/5/fake_stitch.png","brain/lgg/2/fake_stitch.png","brain/gbm/6/TCGA-06-0882-01A-01-BS1.4bbbebf4-f54f-494e-b95e-9e037421ce10.png","brain/lgg/3/fake_stitch.png","lung/luad/6/fake_stitch.png","lung/luad/7/TCGA-05-4382-01A-01-TS1.8db4f123-fdc3-419c-a59d-fca2ca83a597.png","brain/gbm/7/fake_stitch.png","brain/lgg/4/TCGA-DU-6402-01A-01-BS1.0e7e9e6c-257c-43b0-b39b-670edea2a151.png","brain/lgg/5/fake_stitch.png","lung/luad/10/TCGA-50-6594-11A-01-TS1.cbb46ec1-8926-444f-a557-755b5e38a88b.png","lung/lusc/1/fake_stitch.png","lung/lusc/5/fake_stitch.png","brain/gbm/8/fake_stitch.png","brain/gbm/9/TCGA-28-1746-01A-01-BS1.972ee0cd-5f7d-4e8e-b652-551a0c01d742.png","brain/lgg/7/fake_stitch.png","lung/lusc/3/TCGA-60-2714-11A-01-TS1.cb9dd045-b3e1-4fca-94de-3c53b27c06e4.png","brain/gbm/10/TCGA-12-1091-01A-01-BS1.18e67478-255b-49f3-a82e-a80d51b9c318.png","brain/lgg/8/TCGA-E1-A7Z4-01A-01-TS1.575832DD-915A-4B25-8E78-340198C90A2E.png","lung/lusc/4/fake_stitch.png","lung/luad/8/fake_stitch.png","brain/lgg/4/fake_stitch.png","lung/luad/9/fake_stitch.png","brain/lgg/6/TCGA-QH-A6XC-01A-01-TS1.DF1D2A08-EB3D-4075-9F83-E94EB3F06252.png","brain/gbm/8/TCGA-08-0352-01A-01-TS1.3b21a902-555d-42b1-a79f-b1ab895057ea.png","lung/lusc/6/TCGA-LA-A446-01A-02-TSB.BC646F3A-72C3-4701-BB58-DA3CE279DA2E.png","lung/lusc/5/TCGA-56-A5DR-01A-01-TS1.11A39D71-8B66-4106-B43B-AB5652B25E90.png","lung/luad/3/TCGA-49-6743-01A-01-BS1.a59ea9e1-f418-4882-b628-0039a2dd4bbd.png","lung/lusc/10/fake_stitch.png","brain/lgg/9/fake_stitch.png","brain/lgg/2/TCGA-DB-A4XE-01A-01-TSA.D47FE99D-6365-429C-936E-A50160FACEFC.png","lung/luad/7/fake_stitch.png","brain/lgg/10/TCGA-HT-8109-01A-01-BS1.2d21c694-b17d-4602-84d3-7a0ca611b951.png","lung/lusc/8/TCGA-60-2714-11A-01-BS1.77c2d42d-31ed-4c75-9b36-849aa5156713.png","lung/lusc/9/TCGA-L3-A524-01A-01-TS1.EB287A29-0DF5-4AE2-A981-9572F9632D44.png","brain/lgg/6/fake_stitch.png","brain/gbm/1/fake_stitch.png","lung/luad/2/fake_stitch.png","lung/lusc/3/fake_stitch.png","lung/luad/9/TCGA-49-AARN-01A-02-TSB.8C881E03-94B4-42F8-96F7-D22B4A3AAEFC.png","lung/lusc/6/fake_stitch.png","brain/gbm/5/fake_stitch.png","lung/lusc/7/TCGA-77-8146-01A-01-TS1.7eb75af9-2eab-4054-9242-8d9516c6c1e1.png","lung/luad/5/TCGA-49-6745-01A-01-TS1.f386fbd6-ca0e-4672-b2dc-dbc4c54ef9db.png","brain/lgg/3/TCGA-DU-7011-01A-01-TS1.94792828-8e5d-4bc0-a858-495b4e2845c3.png","lung/lusc/9/fake_stitch.png","brain/lgg/10/fake_stitch.png","brain/lgg/7/TCGA-HT-7879-01A-01-TS1.0fdefd20-50b0-4dfd-a9d8-e9a720e0c8ec.png","brain/gbm/9/fake_stitch.png","lung/luad/8/TCGA-53-A4EZ-01A-01-TSA.8947DF62-4243-4F5A-8DE0-23A725AC9124.png","brain/gbm/3/TCGA-08-0351-01A-01-BS1.d99bc896-e564-479e-984e-6f0253b3d127.png","brain/lgg/5/TCGA-RY-A845-01A-01-TS1.5FE99454-68A7-4675-967A-A3D07AE8F663.png","lung/lusc/10/TCGA-22-5477-11A-01-TS1.f67bf6f7-29a4-45ea-b663-a03ebc86391a.png","brain/lgg/8/fake_stitch.png","brain/gbm/6/fake_stitch.png","lung/luad/4/fake_stitch.png","brain/gbm/10/fake_stitch.png","lung/luad/6/TCGA-53-7626-01A-01-BS1.efc70393-acd2-4942-8168-677a8dcac0b8.png","brain/lgg/9/TCGA-DU-6407-01A-01-TS1.bc2f10ec-3b78-4d0f-8866-6aa26a107503.png","lung/luad/10/fake_stitch.png","lung/luad/1/fake_stitch.png","brain/gbm/2/TCGA-16-1460-01A-01-BS1.d289bfd6-c450-464c-8c61-fecc85decb2c.png","brain/gbm/4/TCGA-02-0003-01A-01-BS1.0156cf95-2119-4a30-9894-2c0315c954d1.png","brain/gbm/7/TCGA-08-0349-01A-01-TS1.581a78f0-0acc-4372-96bd-9808388d5be6.png"]
+
+
+            function showNextSlide() {
+                if(currentSlide !== 0) {
+                    current_comment="comment"+currentSlide
+                    var textToWrite = document.getElementById(current_comment).value;
+                    var radio_selected=document.querySelectorAll(`input[name=${_name}]:checked`)[0].value
+                    if(radio_selected === "good"){
+                        good+=1
+                        id="numbers"+(currentSlide+1)
+                        document.getElementById(id).innerHTML="Selected Good Quality patches for Class Ewing Sarcoma: "+ good
+
+                    }
+                    console.log(radio_selected)
+                    name=file_dirs[currentSlide]
+                    comments=comments+name+": "+radio_selected+"; "+textToWrite+"\n"
+                    console.log(comments)
+                }
+                
+                showSlide(currentSlide + 1);
+                
+            }
+
+            function giveBreak() {
+                isBreak=true;
+            }
+
+            function finishBreak() {
+                isBreak=true;
+                
+            }
+            // Variables
+            const quizContainer = document.getElementById('quiz');
+            const resultsContainer = document.getElementById('results');
+            var dataset_selected=""
+            
+            var comments=""
+            // Pagination
+            const nextButton = document.getElementById("next");
+            const breakButton = document.getElementById("break");
+            const finishBreakButton = document.getElementById("continue");
+            const slides = document.querySelectorAll(".slide");
+            const downloadButton = document.getElementById("download");
+            let currentSlide = 0;
+            let good=0;
+            let bool=0;
+
+            // Show the first slide
+            showSlide(currentSlide);
+            
+
+            // Event listeners
+            nextButton.addEventListener("click", showNextSlide);
+            breakButton.addEventListener("click", giveBreak);
+            finishBreakButton.addEventListener("click", finishBreak);
+
+
+        })();
+    
+
+
+        </script>
+    </body>
+</html>

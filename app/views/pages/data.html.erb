@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>OpenSeadragon HTML Overlay Demo</title>
+        <script src="https://cdn.jsdelivr.net/npm/openseadragon/build/openseadragon/openseadragon.min.js"></script>
+        <script src="openseadragon-html-overlay.js"></script>
+        <style type="text/css">
+            html,
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+            }
+            .openseadragon1 {
+                width: 80%;
+                height: 80%;
+                margin-left: 5%;
+                margin-top: 0;
+            }
+            .card-body {
+                margin: 5%; /* Added */
+                float: none; /* Added */
+                margin-bottom: 25%; /* Added */
+
+            }
+        
+            @import url(https://fonts.googleapis.com/css?family=Work+Sans:300,600);
+
+            body{
+                font-size: 20px;
+                font-family: 'Work Sans', sans-serif;
+                color: #333;
+            font-weight: 300;
+            text-align: center;
+            background-color: #f8f6f0;
+            }
+            h1{
+            font-weight: 300;
+            margin: 0px;
+            padding: 10px;
+            font-size: 20px;
+            background-color: #444;
+            color: #fff;
+            }
+            .question{
+            font-size: 30px;
+            margin-bottom: 0px;
+            }
+         
+            button{
+                font-family: 'Work Sans', sans-serif !important;
+                font-size: 22px important;
+                background-color: #279;
+                color: #fff;
+                border: 0px;
+                border-radius: 3px;
+                padding: 20px;
+                cursor: pointer;
+                
+                
+                }
+            #next {
+                position: fixed; /* Fixed/sticky position */
+                bottom: 20px; /* Place the button at the bottom of the page */
+                right: 30px; /* Place the button 30px from the right */
+                z-index: 99; 
+                margin-bottom: 20px;
+                float: right;
+            }
+
+            #break {
+                position: fixed; /* Fixed/sticky position */
+                top: 60px; /* Place the button at the bottom of the page */
+                right: 30px; /* Place the button 30px from the right */
+                z-index: 99; 
+                margin-bottom: 20px;
+                float: right;
+            }
+                button:hover{
+                    background-color: #38a;
+                }
+
+                .slide{
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                width: 100%;
+                z-index: 1;
+                opacity: 0;
+                transition: opacity 0.5s;
+                }
+                .active-slide{
+                opacity: 1;
+                z-index: 2;
+                }
+                .quiz-container{
+                position: relative;
+                height: 100px;
+                margin-top: 40px;
+                }
+
+                .form-group {
+                    font-family: 'Work Sans', sans-serif;
+                    position: fixed; /* Fixed/sticky position */
+                    top: 520px; /* Place the button at the bottom of the page */
+                    right: 30px; /* Place the button 30px from the right */
+                    z-index: 99; 
+                    font-size: 22px;
+                }
+
+                .form-row {
+                    position: fixed !import;
+                    margin: auto;
+                }
+
+                .form-group2 {
+                    width: 100%;
+                    margin-bottom: 10%;
+                }
+
+                #submit {
+                    font-family: 'Work Sans', sans-serif !important;
+                    font-size: 22px important;
+                    position: fixed;
+                    left: 45%;
+                    top:40%;
+                }
+
+                .modal-dialog {
+                        width: 80%;
+                        height:90% !important;
+                }
+                
+                .modal-content {
+                    height: 100%;
+                    width: 100%;
+                }
+               
+        </style>
+    </head>
+    <body>
+        <h1>Reader Study</h1>
+        <button id="next" class="btn btn-success btn-lg">Sonraki Soru</button>
+        <button id="break" class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">Mola</button>
+        <div class="quiz-container">
+            <div id="quiz">
+                <div class="slide">
+                    <div class="question"> Aşağıdaki resmi metin kutusuna açıklayın. </div>
+                    <div class="form-group">
+                        <ul style="list-style-type:none;">
+                            <li><label><input type="radio" name="disease0" value="gbm">GBM</label></li>
+                            <li><label><input type="radio" name="disease0" value="lgg">LGG</label></li>
+                        </ul>
+                        <label for="comment">Yorum:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment0"></textarea>
+                    </div>
+                </div>
+                <div class="slide">
+                    <div class="question"> Aşağıdaki resmi metin kutusuna açıklayın. </div>
+                    <div class="form-group ">
+                        <ul style="list-style-type:none;" >
+                            <li><label><input type="radio" name="disease1" value="luad">LUAD</label></li>
+                            <li><label><input type="radio" name="disease1" value="lusc">LUSC</label></li>
+                        </ul>
+                        <label for="comment">Comment:</label>
+                        <textarea style="overflow:auto;resize:none" class="form-control" rows="5" id="comment1"></textarea>
+                    </div>
+                </div>
+               
+                <div class="slide">
+                    <div class="question"> Göndermeden önce lütfen aşağıdaki formu doldurun:</div>
+                
+                </div>
+                <div class="form-group2">
+                <br><br><br><br><br>
+                    <div class="form-row">
+                        <div class="col-md-3"></div>
+                                 
+                        <div class="col-md-6">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+                </div>
+                <button  id="submit" method="post" class="btn btn-success btn-lg" value="save" >Cevapları Gönder</button>
+            </div>
+        </div>
+        <div id="contentDiv0" class="openseadragon1" style= "display:none; position: relative;"></div>
+        <div id="contentDiv1" class="openseadragon1" style= "display:none; position: relative;"></div>
+
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">!Mola!</h4>
+                </div>
+                <div class="modal-body">
+                <p>Devam etmek için lütfen "Devam" butonuna basın.</p>
+                </div>
+                <div class="modal-footer">
+                <button id="continue" class="btn btn-default" data-dismiss="modal">Devam</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <script>
+
+
+        (function(){
+           
+            var start = Date.now();
+            var break_time=0;
+            var break_start=Date.now();
+            var break_end=Date.now();
+            var isBreak=false;
+            function showSlide(n) {
+                isBreak=false;
+                start = Date.now();
+                
+                slides[currentSlide].classList.remove('active-slide');
+                slides[n].classList.add('active-slide');
+                currentSlide = n;
+                if(currentSlide === slides.length-1){
+                    nextButton.style.display = 'none';
+                    submitButton.style.display = 'inline-block';
+                    breakButton.style.display = 'none';
+                    document.getElementsByClassName("form-group2")[0].style.display='inline-block';
+                }
+                else{
+                    nextButton.style.display = 'inline-block';
+                    submitButton.style.display = 'none';
+                    breakButton.style.display = 'inline-block';
+                    document.getElementsByClassName("form-group2")[0].style.display='none';
+
+                    let current_comment="comment"+currentSlide
+                    let input1 = document.getElementById(current_comment);
+                    let button = document.getElementById("next");
+                    button.disabled = true;
+                    input1.addEventListener("input", stateHandle);
+                    _name="disease"+currentSlide
+                    var requiredRadios = $(`input[name=${_name}]`);
+                    //requiredRadios.addEventListener("change", stateHandle);
+                    for (item=0; item<requiredRadios.length; item++) { 
+                        requiredRadios[item].addEventListener("change", stateHandle); 
+                    }
+                    
+                    function stateHandle() {
+                        var nbr_checked_radios = document.querySelectorAll(`input[name=${_name}]:checked`).length;
+                        if ( nbr_checked_radios === 0  ) {
+                            button.disabled = true;
+                        } else {
+                            button.disabled = false;
+                        }
+                    }
+
+                }
+
+                console.log(currentSlide)
+
+
+                /////////////////////
+                var number_of_slides_list=Array.from(Array(2).keys())
+                var itemsWithoutCurrent = number_of_slides_list.filter(function(x) { return x !== currentSlide; });
+                for(item in itemsWithoutCurrent){
+                    id_name="contentDiv"+item
+                    document.getElementById(id_name).style.display="none";
+                }
+                current_id="contentDiv"+currentSlide
+                document.getElementById(current_id).style.display="block";
+
+                var file_dirs=["foo_files/","foo_files/"]
+                var gbm_dirs=["brain/gbm/1/output/fake_stitch_files/","brain/gbm/1/output/TCGA-06-0145-01A-01-BS1.7c10d545-604b-43b0-8759-c0dd0eae2a08_files/","brain/gbm/2/output/fake_stitch_files/", "brain/gbm/2/output/TCGA-16-1460-01A-01-BS1.d289bfd6-c450-464c-8c61-fecc85decb2c_files/","brain/gbm/3/output/fake_stitch_files/","brain/gbm/3/output/TCGA-08-0351-01A-01-BS1.d99bc896-e564-479e-984e-6f0253b3d127_files/","brain/gbm/4/output/fake_stitch_files/","brain/gbm/4/output/TCGA-02-0003-01A-01-BS1.0156cf95-2119-4a30-9894-2c0315c954d1_files/","brain/gbm/5/output/fake_stitch_files/","brain/gbm/5/output/TCGA-08-0347-01A-01-BS1.561f789b-5bb6-4206-b1cc-ce2f418f1ddc_files/","brain/gbm/6/output/fake_stitch_files/","brain/gbm/6/output/TCGA-06-0882-01A-01-BS1.4bbbebf4-f54f-494e-b95e-9e037421ce10_files/","brain/gbm/7/output/fake_stitch_files/","brain/gbm/7/output/TCGA-08-0349-01A-01-TS1.581a78f0-0acc-4372-96bd-9808388d5be6_files/","brain/gbm/8/output/fake_stitch_files/","brain/gbm/8/output/TCGA-08-0352-01A-01-TS1.3b21a902-555d-42b1-a79f-b1ab895057ea_files/","brain/gbm/9/output/fake_stitch_files/","brain/gbm/9/output/TCGA-28-1746-01A-01-BS1.972ee0cd-5f7d-4e8e-b652-551a0c01d742_files/","brain/gbm/10/output/fake_stitch_files/","brain/gbm/10/output/TCGA-12-1091-01A-01-BS1.18e67478-255b-49f3-a82e-a80d51b9c318_files/"]
+                var lgg_dirs=["brain/lgg/1/output/fake_stitch_files/","brain/lgg/1/output/TCGA-FG-5962-01B-01-BS1.5741fd21-5def-40dc-8fe8-2bdd2f19b744_files/","brain/lgg/2/output/fake_stitch_files/","brain/lgg/2/output/TCGA-DB-A4XE-01A-01-TSA.D47FE99D-6365-429C-936E-A50160FACEFC_files/","brain/lgg/3/output/fake_stitch_files/","brain/lgg/3/output/TCGA-DU-7011-01A-01-TS1.94792828-8e5d-4bc0-a858-495b4e2845c3_files/","brain/lgg/4/output/fake_stitch_files/","brain/lgg/4/output/TCGA-DU-6402-01A-01-BS1.0e7e9e6c-257c-43b0-b39b-670edea2a151_files/","brain/lgg/5/output/fake_stitch_files/","brain/lgg/5/output/TCGA-RY-A845-01A-01-TS1.5FE99454-68A7-4675-967A-A3D07AE8F663_files/","brain/lgg/6/output/fake_stitch_files/","brain/lgg/6/output/TCGA-QH-A6XC-01A-01-TS1.DF1D2A08-EB3D-4075-9F83-E94EB3F06252_files/","brain/lgg/7/output/fake_stitch_files/","brain/lgg/7/output/TCGA-HT-7879-01A-01-TS1.0fdefd20-50b0-4dfd-a9d8-e9a720e0c8ec_files/","brain/lgg/8/output/fake_stitch_files/","brain/lgg/8/output/TCGA-E1-A7Z4-01A-01-TS1.575832DD-915A-4B25-8E78-340198C90A2E_files/","brain/lgg/9/output/fake_stitch_files/","brain/lgg/9/output/TCGA-DU-6407-01A-01-TS1.bc2f10ec-3b78-4d0f-8866-6aa26a107503_files/","brain/lgg/10/output/fake_stitch_files/","brain/lgg/10/output/TCGA-HT-8109-01A-01-BS1.2d21c694-b17d-4602-84d3-7a0ca611b951_files/"]
+                var luad_dirs=["lung/luad/1/output/fake_stitch_files/","lung/luad/1/output/TCGA-38-4631-11A-01-BS1.8777cd1a-1d4d-4d5e-b036-5fd2cb9406f8_files/","lung/luad/2/output/fake_stitch_files/","lung/luad/2/output/TCGA-55-7995-01A-01-BS1.8a52053b-1c6b-428d-936f-197ca2753290_files/","lung/luad/3/output/fake_stitch_files/","lung/luad/3/output/TCGA-49-6743-01A-01-BS1.a59ea9e1-f418-4882-b628-0039a2dd4bbd_files/","lung/luad/4/output/fake_stitch_files/","lung/luad/4/output/TCGA-05-4397-01A-01-TS1.e4fe3921-3510-4404-90a7-09e4eb93ab3e_files/","lung/luad/5/output/fake_stitch_files/","lung/luad/5/output/TCGA-49-6745-01A-01-TS1.f386fbd6-ca0e-4672-b2dc-dbc4c54ef9db_files/","lung/luad/6/output/fake_stitch_files/","lung/luad/6/output/TCGA-53-7626-01A-01-BS1.efc70393-acd2-4942-8168-677a8dcac0b8_files/","lung/luad/7/output/fake_stitch_files/","lung/luad/7/output/TCGA-05-4382-01A-01-TS1.8db4f123-fdc3-419c-a59d-fca2ca83a597_files/","lung/luad/8/output/fake_stitch_files/","lung/luad/8/output/TCGA-53-A4EZ-01A-01-TSA.8947DF62-4243-4F5A-8DE0-23A725AC9124_files/","lung/luad/9/output/fake_stitch_files/","lung/luad/9/output/TCGA-49-AARN-01A-02-TSB.8C881E03-94B4-42F8-96F7-D22B4A3AAEFC_files/","lung/luad/10/output/fake_stitch_files/","lung/luad/10/output/TCGA-50-6594-11A-01-TS1.cbb46ec1-8926-444f-a557-755b5e38a88b_files/"]
+                var lusc_dirs=["lung/lusc/1/output/fake_stitch_files/","lung/lusc/1/output/TCGA-56-8305-01A-01-TS1.5c44f18e-dfa6-47e1-89bd-9f24bb0ada2c_files/","lung/lusc/2/output/fake_stitch_files/","lung/lusc/2/output/TCGA-43-5668-11A-01-TS1.6d8ac185-f903-4df2-b378-1c1f4829796f_files/","lung/lusc/3/output/fake_stitch_files/","lung/lusc/3/output/TCGA-60-2714-11A-01-TS1.cb9dd045-b3e1-4fca-94de-3c53b27c06e4_files/","lung/lusc/4/output/fake_stitch_files/","lung/lusc/4/output/TCGA-52-7810-01A-01-TS1.42a4fb5e-ca1f-4441-bea7-65bfd2eb2f19_files/","lung/lusc/5/output/fake_stitch_files/","lung/lusc/5/output/TCGA-56-A5DR-01A-01-TS1.11A39D71-8B66-4106-B43B-AB5652B25E90_files/","lung/lusc/6/output/fake_stitch_files/","lung/lusc/6/output/TCGA-LA-A446-01A-02-TSB.BC646F3A-72C3-4701-BB58-DA3CE279DA2E_files/","lung/lusc/7/output/fake_stitch_files/","lung/lusc/7/output/TCGA-77-8146-01A-01-TS1.7eb75af9-2eab-4054-9242-8d9516c6c1e1_files/","lung/lusc/8/output/fake_stitch_files/","lung/lusc/8/output/TCGA-60-2714-11A-01-BS1.77c2d42d-31ed-4c75-9b36-849aa5156713_files/","lung/lusc/9/output/fake_stitch_files/","lung/lusc/9/output/TCGA-L3-A524-01A-01-TS1.EB287A29-0DF5-4AE2-A981-9572F9632D44_files/","lung/lusc/10/output/fake_stitch_files/","lung/lusc/10/output/TCGA-22-5477-11A-01-TS1.f67bf6f7-29a4-45ea-b663-a03ebc86391a_files/"]
+    
+                var gbm_width=["99878","99878","18000","18000","11511","11511","89890","89890","12471","12471","23970","23970","15349","15349","20145","20145","16000","16000","19186","19186"]
+                var gbm_height=["44231","44231","13914","13914","13301","13301","42769","42769","17718","17718","21636","21636","18668","18668","19062","19062","17621","17621","18959","18959"]
+                
+                var lgg_width=["23904","23904","111383","111383","37848","37848","33864","33864","99600","99600","94247","94247","27818","27818","91632","91632","23904","23904","35856","35856"]
+                var lgg_height=["41058","41058","24233","24233","43907","43907","31905","31905","29206","29206","25013","25013","26244","26244","33690","33690","28414","28414","26826","26826"]
+                
+                var luad_width=["11000","11000","16932","16932","21896","21896","6000","6000","20944","20944","16786","16786","10000","10000","50456","50456","40836","40836","25704","25704"]
+                var luad_height=["9218","9218","15179","15179","10947","10947","6242","6242","19135","19135","15682","15682","8827","8827","12926","12926","14825","14825","20058","20058"]
+
+                var lusc_width=["5975","5975","7000","7000","9000","9000","13429","13429","43316","43316","49980","49980","4979","4979","9000","9000","57120","57120","10000","10000"]
+                var lusc_height=["8759","8759","5613","5613","7099","7099","17178","17178","15348","15348","14161","14161","5691","5691","9387","9387","18243","18243","12583","12583"]
+
+                var widths=["2000","2000"]
+                var heights=["2000","2000"]
+                var file_name="http://192.168.1.109:8000/"+file_dirs[currentSlide]
+                var _width=widths[currentSlide]
+                var _height=heights[currentSlide]
+
+                var tileSource = {
+                    Image: {
+                        xmlns: "http://schemas.microsoft.com/deepzoom/2008",
+                        Url: file_name,
+                        Format: "png",
+                        Overlap: "2",
+                        TileSize: "128",
+                        Size: {
+                            Width:  _width,
+                            Height: _height
+                        }
+                    }
+                };
+            
+                
+                var viewer = OpenSeadragon({
+                    id: current_id,
+                    prefixUrl: "https://cdn.jsdelivr.net/npm/openseadragon/build/openseadragon/images/",
+                    tileSources: [{
+                        tileSource: tileSource,
+                        width: _width
+                    }], 
+                    showNavigator:  true
+                });
+            
+            }
+
+            function secondsToTime(e){
+                var h = Math.floor(e / 3600).toString().padStart(2,'0'),
+                    m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
+                    s = Math.floor(e % 60).toString().padStart(2,'0');
+                
+                return h + ':' + m + ':' + s;
+            }
+
+
+            function showNextSlide() {
+                end=Date.now()
+                if(isBreak===true){
+                    break_time=break_end-break_start
+                }
+                else{
+                    break_time=0
+                }
+                interval=end-start-break_time
+                interval=Math.floor(interval / 1000)
+                interval=secondsToTime(interval)
+                current_comment="comment"+currentSlide
+                var textToWrite = document.getElementById(current_comment).value;
+                var radio_selected=document.querySelectorAll(`input[name=${_name}]:checked`)[0].value
+                comments=comments+radio_selected+"; "+textToWrite+" : "+interval+"\n"
+                console.log(comments)
+
+                showSlide(currentSlide + 1);
+                
+            }
+
+            
+            function giveBreak() {
+                break_start=Date.now()
+                isBreak=true;
+                
+            }
+
+            function finishBreak() {
+                break_end=Date.now()
+                isBreak=true;
+                
+            }
+
+
+            // Variables
+            const quizContainer = document.getElementById('quiz');
+            const resultsContainer = document.getElementById('results');
+            const submitButton = document.getElementById('submit');
+            
+            var comments=""
+            // Pagination
+            const nextButton = document.getElementById("next");
+            const breakButton = document.getElementById("break");
+            const finishBreakButton = document.getElementById("continue");
+            const slides = document.querySelectorAll(".slide");
+            let currentSlide = 0;
+
+            // Show the first slide
+            showSlide(currentSlide);
+            
+            
+
+            // Event listeners
+            nextButton.addEventListener("click", showNextSlide);
+            breakButton.addEventListener("click", giveBreak);
+            finishBreakButton.addEventListener("click", finishBreak);
+
+            //validate 
+            let input1 = document.getElementById("exampleInputEmail1");
+            //let input2 = document.getElementById("last_name");
+            let button = document.getElementById("submit");
+            button.disabled = true;
+            input1.addEventListener("input", stateHandle);
+            //input2.addEventListener("input", stateHandle);
+            function stateHandle() {
+                var pattern=/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+                result2=pattern.test(document.getElementById("exampleInputEmail1").value)
+                //result3=pattern.test(document.getElementById("last_name").value)
+                //if ($.trim(input1.value).length === 0 || $.trim(input2.value).length === 0 || document.getElementById("first_name").value === "" || document.getElementById("last_name").value ==="" ) {
+                if(result2===false) {    
+                    button.disabled = true;
+                } else {
+                    button.disabled = false;
+                }
+            }
+
+            //comment validate
+    
+
+
+            function saveTextAsFile(){
+
+            var textFileAsBlob = new Blob([comments], {type:'text/plain'});
+            var fileNameToSaveAs = $.trim(document.getElementById('exampleInputEmail1').value)+".txt";
+        
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.innerHTML = "Download File";
+            if (window.webkitURL != null)
+            {
+
+                downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+            }
+            else
+            {
+
+                downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+                downloadLink.onclick = destroyClickedElement;
+                downloadLink.style.display = "none";
+                document.body.appendChild(downloadLink);
+            }
+        
+            downloadLink.click();
+        }
+    
+        var button_sbmt = document.getElementById('submit');
+        button_sbmt.addEventListener('click', saveTextAsFile);
+
+        })();
+        </script>
+    </body>
+</html>
